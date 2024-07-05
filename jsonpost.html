@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>JSON Server Data</title>
+        <style>
+
+        </style>
+    </head>
+    <body>
+        <h1>Create JSON Data</h1>
+        <form name="forms" id="forms">
+            <label>
+                What's your username?
+                <input type="text" name="username"/>
+            </label>
+            <label>
+                How many years have you been a developer?
+                <input type="number" name="age"/>
+            </label>
+            <label>
+                Upload Images
+                <input type="file" name="images" accept="image/png, image/jpeg" multiple/>
+            </label>
+            <label>
+                Do you know JavaScript?
+                <input type="checkbox" name="languages" value="javascript"/>JavaScript
+            </label>
+            <label>
+                Do you know Python?
+                <input type="checkbox" name="languages" value="python"/>Python
+            </label>
+            <label>
+                Enjoyed thisblog?
+                <input type="checkbox" name="isHappyReader"/>Yes
+            </label>
+            <button type="submit">Submit</button>
+        </form>
+        <script>
+            const formElement = document.querySelector('form#forms');
+            const getFormJson = (form) => {
+                const data = new FormData(form);
+                return Array.from(data.keys()).reduce((result, key) => {
+                    if(result[key]){
+                        result[key] = data.getAll(key);
+                        return result;
+                    }
+                }, {});
+            };
+
+            const handler = (event) => {
+                event.preventDefault();
+                const valid = formElement.reportValidity();
+                if(valid){
+                    const result = getFormJson(formElement);
+                    const images = [result.images].flat().filter((file) => !!file.name);
+                    const languages = [result.languages || []].flat();
+                    const isHappyReader = !!(result.isHappyReader && result.isHappyReader ===)
+                }
+            }
+        </script>
+    </body>
+</html>

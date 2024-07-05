@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>JSON Student Data</title>
+        <style>
+            table, th, td{
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+            th, td{
+                padding: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Student Table</h1>
+
+        <table id="user-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>NAME</th>
+                    <th>EMAIL</th>
+                    <th>PHONE</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!--Dynamically populating the data from the JSON Server-->
+            </tbody>
+        </table>
+        
+        <script>
+            fetch("http://localhost:3000/users")
+            .then(response => response.json())
+            .then(data => {
+                let tbody = document.getElementById("user-table").getElementsByTagName("tbody")[0];
+                for(let user of data){
+                    let tr = document.createElement('tr');
+                    let td_id = document.createElement('td');
+                    let td_name = document.createElement('td');
+                    let td_email = document.createElement('td');
+                    let td_phone = document.createElement('td');
+
+                    td_id.textContent = user.id;
+                    td_name.textContent = user.name;
+                    td_email.textContent = user.email;
+                    td_phone.textContent = user.phone;
+
+                    tr.appendChild(td_id);
+                    tr.appendChild(td_name);
+                    tr.appendChild(td_email);
+                    tr.appendChild(td_phone);
+
+                    tbody.appendChild(tr);
+                }
+            })
+            .catch(error =>{
+                console.error(error);
+            })
+        </script>
+
+    </body>
+</html>
